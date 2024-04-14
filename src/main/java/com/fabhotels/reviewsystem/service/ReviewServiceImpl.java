@@ -68,6 +68,7 @@ public class ReviewServiceImpl implements ReviewService {
             }
             RelevanceAlgorithmHelper relevanceAlgorithm = new RelevanceAlgorithmHelper(reviews);
             List<ReviewResponse> responses = relevanceAlgorithm.calculateRelevanceOfReviews();
+            Collections.sort(responses, Comparator.comparing(ReviewResponse::getRelevanceScore,(s1,s2)-> {return (int) (s2-s1);}));
             return CommonUtils.getResponseObjForSuccess(responses);
         }catch (Exception e){
             return CommonUtils.getResponseObjForFailure(e.getMessage());
